@@ -70,15 +70,16 @@ documento HTML, CSS, JavaScript, imágenes, fuentes u otros.
 
 Complete la tabla:
 
-  Recurso   Tipo   Dominio     Tamaño
-  --------- ------ --------- --------
-                             
-                             
-                             
-                             
-                             
+  Recurso                       Tipo      Dominio             Tamaño
+  ---------                     ------    ---------           --------
+   formatos-institucionales/   Documento  itm.edu.co           92881
+   js?id=G-MDYJ1KCN8R          script     googletagmanager.com 169423
+   frontend.min.css?ver=1.047  stylesheet www.itm.edu.co       7231       
+   header_govco.png            png        css.mintic.gov.co    13.3kB
+   itm-logo.svg                svg+xml    www.itm.edu.co       13002
 
-**Total de solicitudes observadas:** `_____`
+
+**Total de solicitudes observadas:** `143`
 
 ## Evidencia
 
@@ -98,8 +99,8 @@ Inclúyala aquí:
 
 **¿Por qué una sola URL puede generar múltiples solicitudes HTTP?**
 
-> Escriba aquí su respuesta.
-
+> porque dentro tiene una pagina html que para funcionar solicita mas recursos.
+ 
 ------------------------------------------------------------------------
 
 # 3. Análisis de una solicitud HTTP
@@ -111,12 +112,12 @@ Identifique la información solicitada a continuación.
 
   Elemento              Resultado
   --------------------- -----------
-  URL                   
-  Método HTTP           
-  Código de estado      
-  Host / dominio        
-  Tipo de recurso       
-  Tiempo de respuesta   
+  URL                   https://www.itm.edu.co/formatos-institucionales/
+  Método HTTP           GET
+  Código de estado      200 OK
+  Host / dominio        itm.edu.co
+  Tipo de recurso       document
+  Tiempo de respuesta   1.41 s
 
 ## Flujo que se está observando
 
@@ -146,12 +147,12 @@ Inclúyala en el informe:
 
 **¿Qué recurso solicitó el navegador?**
 
-> Escriba aquí su respuesta.
+> Una pagina web contine los formatos institucionales.
 
 **¿Qué información permite determinar si la solicitud fue atendida
 correctamente?**
 
-> Escriba aquí su respuesta.
+> Su codigo de respuesta que es 200 OK.
 
 ------------------------------------------------------------------------
 
@@ -176,13 +177,13 @@ Utilizando **Elementos / Elements**:
 
 ## Resultados
 
-**Elemento seleccionado:** `____________________________`
+**Elemento seleccionado:** `___Boton_________________________`
 
-**Etiqueta HTML:** `____________________________`
+**Etiqueta HTML:** `____<a </a>________________________`
 
-**Contenido original:** `____________________________`
+**Contenido original:** `__________Descargar__________________`
 
-**Modificación realizada:** `____________________________`
+**Modificación realizada:** `______Descargar Archivo______________________`
 
 El proceso observado puede representarse conceptualmente así:
 
@@ -213,7 +214,7 @@ Inclúyala aquí:
 **¿La modificación realizada sobre el DOM alteró permanentemente la
 aplicación o los archivos almacenados en el servidor? Justifique.**
 
-> Escriba aquí su respuesta.
+> La modificación no es permanente debido a que se guarda hasta que se recarga la pagina al hacerlo vuelve a sus valores originales.
 
 ------------------------------------------------------------------------
 
@@ -236,12 +237,13 @@ Observe si aparece una nueva solicitud en Network.
 
   Elemento                       Resultado
   ------------------------------ -----------
-  Acción realizada               
-  ¿Generó una nueva solicitud?   
-  URL solicitada                 
-  Método HTTP                    
-  Código de estado               
-  Tipo de respuesta              
+  Acción realizada               Reaizar una descarga         
+  ¿Generó una nueva solicitud?   Si
+  URL solicitada                 https://www.google.com.co/ads/ga-audiences?v=1&t=sr&slf_rd=1&_r=4&tid=G-B94JQ2LRPV&cid=1474793872.1783691916&gtm=45je68i1v882900881za200zb9177264783zd9177264783&rcb=13&aip=1&dma=0&gcd=13l3l3l3l1l1&npa=0&frm=0&tag_exp=115938466~115938469~118897920~118897930~119367802~119367810~120385422&z=843361862
+
+  Método HTTP                    GET
+  Código de estado               200 OK
+  Tipo de respuesta              descarga
 
 ## Ciclo de interacción
 
@@ -277,7 +279,7 @@ Inclúyala aquí:
 **Explique la relación entre la acción realizada por el usuario y la
 solicitud observada.**
 
-> Escriba aquí su respuesta.
+> Al momento de dar clik en el boton se dispara una solicitud al sistema que pedi descargar un archivo y el lo descarga automaticamente.
 
 ------------------------------------------------------------------------
 
