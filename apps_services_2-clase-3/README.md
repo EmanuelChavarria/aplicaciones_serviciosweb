@@ -118,6 +118,7 @@ Identifique la información solicitada a continuación.
   Host / dominio        itm.edu.co
   Tipo de recurso       document
   Tiempo de respuesta   1.41 s
+  --------------------- -----
 
 ## Flujo que se está observando
 
@@ -140,7 +141,7 @@ evidencias/request.png
 Inclúyala en el informe:
 
 ``` markdown
-![Análisis de la solicitud HTTP](evidencias/request.png)
+![evidencias/request.png](evidencias/request.png)
 ```
 
 ### Análisis
@@ -177,13 +178,13 @@ Utilizando **Elementos / Elements**:
 
 ## Resultados
 
-**Elemento seleccionado:** `___Boton_________________________`
+**Elemento seleccionado:** `Boton`
 
-**Etiqueta HTML:** `____<a </a>________________________`
+**Etiqueta HTML:** `<a </a>`
 
-**Contenido original:** `__________Descargar__________________`
+**Contenido original:** `Descargar`
 
-**Modificación realizada:** `______Descargar Archivo______________________`
+**Modificación realizada:** `Descargar Archivo`
 
 El proceso observado puede representarse conceptualmente así:
 
@@ -237,13 +238,12 @@ Observe si aparece una nueva solicitud en Network.
 
   Elemento                       Resultado
   ------------------------------ -----------
-  Acción realizada               Reaizar una descarga         
-  ¿Generó una nueva solicitud?   Si
-  URL solicitada                 https://www.google.com.co/ads/ga-audiences?v=1&t=sr&slf_rd=1&_r=4&tid=G-B94JQ2LRPV&cid=1474793872.1783691916&gtm=45je68i1v882900881za200zb9177264783zd9177264783&rcb=13&aip=1&dma=0&gcd=13l3l3l3l1l1&npa=0&frm=0&tag_exp=115938466~115938469~118897920~118897930~119367802~119367810~120385422&z=843361862
-
+  Acción realizada               Mostrar una venta emergente de whatsapp         
+  ¿Generó una nueva solicitud?   No
+  URL solicitada                 data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 24 24'%3E%3Cpath d='M24 2.4 21.6 0 12 9.6 2.4 0 0 2.4 9.6 12 0 21.6 2.4 24l9.6-9.6 9.6 9.6 2.4-2.4-9.6-9.6z'/%3E%3C/svg%3E
   Método HTTP                    GET
   Código de estado               200 OK
-  Tipo de respuesta              descarga
+  Tipo de respuesta              Mostrar informacion
 
 ## Ciclo de interacción
 
@@ -300,7 +300,8 @@ Reemplace el siguiente bloque con su diagrama:
 
 ``` mermaid
 flowchart LR
-    A[Construya aquí] --> B[su flujo observado]
+    A[Usuario] --> B[Interfaz] --> C[Navegador] --> D[Solicitud HTTP] --> E[Servidor] --> F[Respuesta HTTP] --> C --> E[DOM] --> B
+    
 ```
 
 ------------------------------------------------------------------------
@@ -314,15 +315,15 @@ Clasifique sus hallazgos:
 
 ## Elementos observados directamente
 
--   
--   
--   
+- Las solicitudes que hace la pagina en cada interacción   
+- Tipos de recursos que se cargan en la pagina como html 
+- elementos extra de todas las solicitudes como su estado, tiempo, tamaño etc  
 
 ## Elementos inferidos
 
--   
--   
--   
+- llamado que hace el servidor para ejectar las solictudes  
+- actualización de datos en la interfaz  
+- como el servidor organiza la informacion para poder mandarla  
 
 > No presente como observado un proceso interno que las herramientas del
 > navegador no permitan comprobar directamente.
@@ -333,9 +334,9 @@ Clasifique sus hallazgos:
 
 Redacte **tres conclusiones técnicas** derivadas de la práctica.
 
-1.  
-2.  
-3.  
+1. Conocer la herramientas de desarrollador de f12 ayuda a resolver problemas tecnicos y validar como llega la informacion de la pagina
+2. Saber el flujo correcto con el cual se dispone una aplicacion evita cometer errores y tambien solucionarlos de una forma rapida y precisa 
+3. Entender los conceptos de peticiones ayuda a distinguir ciertas peticiones de otras para revisar su funcionamiento determinando si estan bien o no 
 
 Las conclusiones deben explicar lo aprendido a partir de la evidencia y
 no limitarse a describir las actividades realizadas.
