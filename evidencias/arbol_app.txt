@@ -1,0 +1,36 @@
+app/
+├── api
+│   ├── __init__.py
+│   ├── medicion.py
+│   ├── sensor.py
+│   └── sensor_magnitud.py
+├── crud
+│   ├── __init__.py
+│   ├── medicion.py
+│   ├── sensor.py
+│   └── sensor_magnitud.py
+├── database
+│   ├── __init__.py
+│   └── connection.py
+├── models
+│   ├── __init__.py
+│   ├── medicion.py
+│   ├── sensor.py
+│   └── sensor_magnitud.py
+├── mqtt
+│   ├── __init__.py
+│   └── client.py
+├── schemas
+│   ├── __init__.py
+│   ├── medicion.py
+│   ├── sensor.py
+│   └── sensor_magnitud.py
+├── services
+│   ├── __init__.py
+│   └── ingesta.py
+├── utils
+│   ├── __init__.py
+│   └── tiempo.py
+├── __init__.py
+├── config.py
+└── main.py

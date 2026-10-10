@@ -1,0 +1,51 @@
+# Evidencias MQTT — Taller 2 (extraídas de logs/app.log, texto sin modificar)
+# Sensor WQ-001 | tópico iot/sensors/WQ-001/data | broker emqx.coriotlab.co:1883
+
+## Prueba 1 — Recepción MQTT (arranque, conexión, suscripción y primer mensaje)
+2026-10-10 13:10:16,620 | INFO     | app | Conexión a PostgreSQL verificada
+2026-10-10 13:10:16,620 | INFO     | app | Sensor asignado: WQ-001 | Tópico: iot/sensors/WQ-001/data
+2026-10-10 13:10:16,784 | INFO     | app.mqtt.client | Conectado al broker emqx.coriotlab.co:1883
+2026-10-10 13:10:16,785 | INFO     | app.mqtt.client | Suscrito al tópico: iot/sensors/WQ-001/data
+2026-10-10 13:10:20,469 | INFO     | app.mqtt.client | Mensaje recibido en iot/sensors/WQ-001/data: {"sensor_id": "WQ-001", "timestamp": "2026-10-10T18:10:20Z", "measurements": {"temperature": {"value": 26.74, "unit": "C"}, "ph": {"value": 7.33, "unit": "pH"}}}
+
+## Prueba 2 — Medición válida (mensaje recibido + ACEPTADO)
+2026-10-10 13:10:20,469 | INFO     | app.mqtt.client | Mensaje recibido en iot/sensors/WQ-001/data: {"sensor_id": "WQ-001", "timestamp": "2026-10-10T18:10:20Z", "measurements": {"temperature": {"value": 26.74, "unit": "C"}, "ph": {"value": 7.33, "unit": "pH"}}}
+2026-10-10 13:10:20,659 | INFO     | app.mqtt.client | ACEPTADO [OK] 2 medición(es) del sensor 'WQ-001' guardadas
+
+## Prueba 3 — Sensor inexistente
+(sin ocurrencias de SENSOR_INEXISTENTE en esta recolección; ver respaldo en tests/test_ingesta.py::test_03_sensor_inexistente)
+
+## Prueba 4 — Unidad incorrecta
+2026-10-10 13:12:10,465 | INFO     | app.mqtt.client | Mensaje recibido en iot/sensors/WQ-001/data: {"sensor_id": "WQ-001", "timestamp": "2026-10-10T18:12:10Z", "measurements": {"temperature": {"value": 30.74, "unit": "INVALID_UNIT"}, "ph": {"value": 8.56, "unit": "pH"}}}
+2026-10-10 13:12:10,558 | WARNING  | app.mqtt.client | RECHAZADO [UNIDAD_INVALIDA] 'temperature' debe venir en 'C', llegó 'INVALID_UNIT'
+
+## Prueba 5 — Tipo de dato incorrecto
+2026-10-10 13:13:35,470 | INFO     | app.mqtt.client | Mensaje recibido en iot/sensors/WQ-001/data: {"sensor_id": "WQ-001", "timestamp": "2026-10-10T18:13:35Z", "measurements": {"temperature": {"value": 27.61, "unit": "C"}, "ph": {"value": "6.28", "unit": "pH"}}}
+2026-10-10 13:13:35,471 | WARNING  | app.mqtt.client | RECHAZADO [TIPO_DATO_INVALIDO] measurements.ph.value.int: Input should be a valid integer
+
+## Prueba 6 — Magnitud incorrecta
+2026-10-10 13:13:45,513 | INFO     | app.mqtt.client | Mensaje recibido en iot/sensors/WQ-001/data: {"sensor_id": "WQ-001", "timestamp": "2026-10-10T18:13:45Z", "measurements": {"temperature": {"value": 23.26, "unit": "C"}, "ph": {"value": 7.04, "unit": "pH"}, "humidity": {"value": 83.92, "unit": "%"}}}
+2026-10-10 13:13:45,643 | WARNING  | app.mqtt.client | RECHAZADO [MAGNITUD_INVALIDA] el sensor 'WQ-001' no mide la magnitud 'humidity'
+
+## Prueba 7 — Timestamp inválido
+2026-10-10 13:56:35,587 | INFO     | app.mqtt.client | Mensaje recibido en iot/sensors/WQ-001/data: {"sensor_id": "WQ-001", "timestamp": "not-a-timestamp", "measurements": {"temperature": {"value": 18.11, "unit": "C"}, "ph": {"value": 8.16, "unit": "pH"}}}
+2026-10-10 13:56:35,592 | WARNING  | app.mqtt.client | RECHAZADO [TIMESTAMP_INVALIDO] timestamp: Value error, timestamp debe ser texto ISO 8601 con zona, p. ej. 2026-10-07T16:25:30Z
+
+## Extra — Estructura inválida (campo obligatorio ausente)
+2026-10-10 13:23:30,505 | INFO     | app.mqtt.client | Mensaje recibido en iot/sensors/WQ-001/data: {"sensor_id": "WQ-001", "timestamp": "2026-10-10T18:23:30Z", "measurements": {"temperature": {"value": 25.13}, "ph": {"value": 7.57, "unit": "pH"}}}
+2026-10-10 13:23:30,505 | WARNING  | app.mqtt.client | RECHAZADO [ESTRUCTURA_INVALIDA] measurements.temperature.unit: Field required
+
+## Extra — Valor fuera de rango
+2026-10-10 13:15:45,483 | INFO     | app.mqtt.client | Mensaje recibido en iot/sensors/WQ-001/data: {"sensor_id": "WQ-001", "timestamp": "2026-10-10T18:15:45Z", "measurements": {"temperature": {"value": 999999.0, "unit": "C"}, "ph": {"value": 6.62, "unit": "pH"}}}
+2026-10-10 13:15:45,578 | WARNING  | app.mqtt.client | RECHAZADO [VALOR_FUERA_DE_RANGO] 'temperature'=999999.0 fuera del rango [0.0000, 50.0000] C
+
+## Resumen de la recolección
+Primer mensaje: 2026-10-10 13:10:20 | último: 2026-10-10 15:07:45 | duración: 1 h 57 min
+Mensajes recibidos: 1147 | ACEPTADOS: 1089 (2178 filas en mediciones) | RECHAZADOS: 58
+  RECHAZADO [UNIDAD_INVALIDA]: 11
+  RECHAZADO [TIPO_DATO_INVALIDO]: 17
+  RECHAZADO [MAGNITUD_INVALIDA]: 10
+  RECHAZADO [TIMESTAMP_INVALIDO]: 9
+  RECHAZADO [ESTRUCTURA_INVALIDA]: 7
+  RECHAZADO [VALOR_FUERA_DE_RANGO]: 4
+  RECHAZADO [SENSOR_INEXISTENTE]: 0
